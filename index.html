@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DojaVerse - Unofficial Doja Cat Fan Encyclopedia</title>
+<meta name="description" content="Explore Doja Cat's albums, songs, timeline and awards. Quiz, favorites and playlists. Unofficial fan project.">
+<meta name="theme-color" content="#ff2e88">
+<meta property="og:title" content="DojaVerse">
+<meta property="og:description" content="An interactive, unofficial Doja Cat fan encyclopedia and music explorer.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%90%B1%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff7fb;--ink:#1d0f3a;--card:#fff;--pink:#ff2e88;--yel:#ffe14d;--blu:#3a2cff;--line:#1d0f3a;--mut:#5b4d78}
+[data-theme=dark]{--bg:#150a2b;--ink:#fff3fa;--card:#241245;--line:#fff3fa;--mut:#c4b5e6}
+[data-theme=sun]{--bg:#fff3b0;--ink:#2a1200;--card:#fffbe0;--pink:#ff5a1f;--blu:#0b6e4f;--line:#2a1200;--mut:#6b4a2b}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 'DM Sans',system-ui,sans-serif}
+h1,h2,h3{font-family:'Bowlby One',Impact,sans-serif;font-weight:400;line-height:1.1;margin:0 0 .5em}
+a{color:var(--blu)}[data-theme=dark] a{color:var(--yel)}
+:focus-visible{outline:3px solid var(--blu);outline-offset:2px}[data-theme=dark] :focus-visible{outline-color:var(--yel)}
+nav{position:sticky;top:0;z-index:20;background:var(--yel);border-bottom:3px solid #1d0f3a;display:flex;gap:.25rem;align-items:center;padding:.4rem .8rem;overflow-x:auto;white-space:nowrap}
+nav a{color:#1d0f3a;text-decoration:none;font-weight:700;padding:.3rem .6rem;border-radius:99px}nav a:hover{background:#1d0f3a;color:var(--yel)}
+nav b{font-family:'Bowlby One',sans-serif;margin-right:.6rem;color:#1d0f3a}
+nav button{margin-left:auto}
+section{max-width:1100px;margin:auto;padding:2.5rem 1rem}
+.hero{max-width:none;background:var(--pink);color:#fff;border-bottom:3px solid var(--line);padding:3.5rem 1rem}
+.hero>div{max-width:1100px;margin:auto}
+.hero h1{font-size:clamp(2.6rem,10vw,6.5rem);text-shadow:5px 5px 0 #1d0f3a;margin-bottom:.2em}
+.hero p{max-width:50ch;font-size:1.15rem}
+.stats{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem}
+.stats span{background:var(--yel);color:#1d0f3a;border:3px solid #1d0f3a;border-radius:12px;padding:.3rem .8rem;font-weight:700;box-shadow:3px 3px 0 #1d0f3a}
+button,select,input,textarea{font:inherit;color:var(--ink)}
+button{cursor:pointer;background:var(--card);border:2px solid var(--line);border-radius:10px;padding:.4rem .8rem;font-weight:700;box-shadow:2px 2px 0 var(--line)}
+button:hover{background:var(--yel);color:#1d0f3a}button.pri{background:var(--pink);color:#fff}
+input,select,textarea{background:var(--card);border:2px solid var(--line);border-radius:10px;padding:.45rem .6rem;max-width:100%}
+.bar{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}.bar input[type=search]{flex:1;min-width:200px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:1rem}
+.card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:.8rem;box-shadow:4px 4px 0 var(--line)}
+.cover{aspect-ratio:1;border-radius:10px;border:2px solid var(--line);display:flex;align-items:flex-end;padding:.6rem;color:#fff;font-family:'Bowlby One',sans-serif;font-size:1.1rem;line-height:1.1;margin-bottom:.6rem;text-shadow:2px 2px 0 rgba(0,0,0,.4);overflow-wrap:anywhere}
+.mut{color:var(--mut);font-size:.9rem}
+.badge{display:inline-block;background:var(--yel);color:#1d0f3a;border:2px solid #1d0f3a;border-radius:99px;padding:0 .5rem;font-size:.75rem;font-weight:700;margin:.1rem}
+.song{display:flex;flex-direction:column;gap:.3rem}.song h3{font-size:1.05rem;margin:0}
+.row{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center}
+.tl{border-left:4px solid var(--pink);margin-left:.5rem;padding-left:1rem}
+.tl details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:.5rem .8rem;margin-bottom:.7rem}
+.tl summary{cursor:pointer;font-weight:700}
+.chart{display:flex;align-items:flex-end;gap:.4rem;height:160px;margin:1rem 0;border-bottom:3px solid var(--line)}
+.chart div{flex:1;background:var(--pink);border:2px solid var(--line);border-bottom:0;min-width:24px;position:relative}
+.chart div span{position:absolute;top:-1.4rem;left:0;right:0;text-align:center;font-weight:700;font-size:.85rem}
+.chart div i{position:absolute;bottom:-1.5rem;left:0;right:0;text-align:center;font-size:.75rem;font-style:normal}
+.chart{margin-bottom:2rem}
+dialog{max-width:560px;width:92%;background:var(--card);color:var(--ink);border:3px solid var(--line);border-radius:16px;box-shadow:8px 8px 0 var(--pink)}
+dialog::backdrop{background:rgba(29,15,58,.6)}
+.opt{display:block;width:100%;text-align:left;margin:.4rem 0}.opt.ok{background:#2bd67b;color:#000}.opt.no{background:#ff5d5d;color:#000}
+form label{display:block;font-weight:700;margin-top:.5rem}form input,form select,form textarea{width:100%}
+#toast{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:.6rem 1rem;border-radius:10px;display:none;z-index:50}
+footer{background:#1d0f3a;color:#fff;padding:1.5rem 1rem;text-align:center;font-size:.9rem}
+.note{background:var(--yel);color:#1d0f3a;border:2px solid #1d0f3a;border-radius:10px;padding:.5rem .8rem;margin:0 0 1rem}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<nav aria-label="Main">
+<b>DojaVerse</b><a href="#home">Home</a><a href="#bio">Biography</a><a href="#music">Discography</a><a href="#timeline">Timeline</a><a href="#awards">Awards</a><a href="#collabs">Collaborators</a><a href="#quiz">Quiz</a><a href="#playlists">Playlists</a><a href="#add">Add song</a><a href="#about">About</a>
+<button id="themeBtn" aria-label="Change color theme">Theme</button>
+</nav>
+<header class="hero" id="home"><div>
+<h1>DojaVerse</h1>
+<p>Explore Doja Cat's albums, songs, career timeline and awards. Search the catalog, build playlists and test your knowledge.</p>
+<div class="stats" id="stats"></div>
+<p class="row" style="margin-top:1rem"><button class="pri" id="sotd">Song of the day</button><a href="#quiz"><button>Start quiz</button></a></p>
+</div></header>
+<main>
+<div id="notice"></div>
+<section id="bio"><h2>Biography</h2><div id="bioBox" class="card"></div></section>
+<section id="music"><h2>Discography</h2>
+<div class="bar"><input type="search" id="q" placeholder="Search songs, albums, collaborators, awards, events" aria-label="Search">
+<select id="fAlbum" aria-label="Album"></select><select id="fYear" aria-label="Year"></select>
+<select id="fType" aria-label="Type"><option value="">All types</option><option value="album">Album tracks</option><option value="single">Singles</option></select>
+<select id="fSort" aria-label="Sort"><option value="y">Sort: year</option><option value="t">Sort: title</option><option value="p">Sort: chart peak</option></select>
+<button id="favOnly" aria-pressed="false">Favorites only</button></div>
+<p class="mut" id="count"></p><div class="grid" id="songs"></div>
+<h3 style="margin-top:2rem">Releases per year</h3><div class="chart" id="chart" role="img" aria-label="Bar chart of songs per year"></div>
+<h3>Albums</h3><div class="grid" id="albums"></div>
+<h3 style="margin-top:2rem">Compare two albums</h3>
+<div class="bar"><select id="c1" aria-label="First album"></select><select id="c2" aria-label="Second album"></select></div><div id="cmp"></div>
+</section>
+<section id="timeline"><h2>Career timeline</h2><div class="tl" id="tl"></div></section>
+<section id="awards"><h2>Awards and records</h2><div class="grid" id="aw"></div></section>
+<section id="collabs"><h2>Collaborators</h2><div class="grid" id="co"></div></section>
+<section id="quiz"><h2>Quiz</h2><div class="card" id="quizBox"></div><h3 style="margin-top:1.5rem">Leaderboard</h3><div id="lb"></div></section>
+<section id="playlists"><h2>Playlists</h2>
+<form id="plForm" class="bar"><input id="plName" placeholder="New playlist name" maxlength="40" aria-label="Playlist name"><button class="pri">Create playlist</button></form>
+<div id="pl"></div></section>
+<section id="add"><h2>Add or edit a song</h2>
+<p class="mut">Songs you add are saved in this browser only. Export the JSON and paste it into data.json on GitHub to share it with every visitor.</p>
+<form id="addForm" class="card">
+<label>Title<input id="aT" required maxlength="80"></label>
+<label>Album<select id="aA"></select></label>
+<label>Release year<input id="aY" type="number" min="2000" max="2100" required></label>
+<label>Featured artists (comma separated)<input id="aF" maxlength="120"></label>
+<label>Genre<input id="aG" maxlength="40"></label>
+<label>Notes<textarea id="aN" maxlength="300" rows="2"></textarea></label>
+<p class="row"><button class="pri">Save song</button><button type="button" id="exp">Export JSON</button><button type="button" id="imp">Import JSON</button><button type="button" id="clr">Remove my songs</button></p>
+<input type="file" id="impFile" accept=".json" hidden></form></section>
+<section id="about"><h2>About and sources</h2>
+<p>DojaVerse is an unofficial fan project. Data last updated: <b id="upd"></b>. This catalog is a curated starting point, not a complete list. Songs without a chart peak simply have no figure recorded yet. Verify details with the official sources below before relying on them.</p>
+<p><a href="https://www.billboard.com/" target="_blank" rel="noopener noreferrer">Billboard</a> | <a href="https://www.riaa.com/gold-platinum/" target="_blank" rel="noopener noreferrer">RIAA</a> | <a href="https://www.grammy.com/" target="_blank" rel="noopener noreferrer">Recording Academy</a> | <a href="https://en.wikipedia.org/wiki/Doja_Cat" target="_blank" rel="noopener noreferrer">Wikipedia</a></p>
+<p class="mut">Lyrics are not reproduced here. Lyrics links open an outside search. Cover art is generated placeholder art.</p></section>
+</main>
+<footer>Unofficial fan project. Not affiliated with or endorsed by Doja Cat, her management, or her record labels.</footer>
+<dialog id="m"></dialog><div id="toast" role="status"></div>
+
+<script id="seed" type="application/json">
+{"updated":"2026-10-11",
+"bio":{"name":"Amala Ndompetelo Zandile Dlamini (Doja Cat)","born":"October 21, 1995, Los Angeles, California","family":"Her father, Dumisani Dlamini, is a South African actor and musician. Her mother, Deborah Sawyer, is an American painter and set designer.","about":"She began posting music on SoundCloud as a teenager, signed with Kemosabe/RCA, and moved between pop, R&B, funk and rap across her albums."},
+"albums":[
+{"id":"purrr","t":"Purrr!","y":2014,"k":"EP","n":"Early EP that introduced her sound.","v":true,"tr":[]},
+{"id":"amala","t":"Amala","y":2018,"k":"Debut album","n":"Debut studio album, released on Kemosabe/RCA.","v":true,"tr":["Roll With Us","Candy","Mooo!"]},
+{"id":"hotpink","t":"Hot Pink","y":2019,"k":"Studio album","n":"Second studio album and her commercial breakthrough.","v":true,"tr":["Streets","Juicy","Say So","Bottom Bitch","Rules","Cyber Sex","Won't Bite","Addiction","Like That","Tia Tamera"]},
+{"id":"planether","t":"Planet Her","y":2021,"k":"Studio album","n":"Third studio album with a large guest list.","v":true,"tr":["Woman","Naked","Payday","Get Into It (Yuh)","Need to Know","You Right","Options","Kiss Me More","Alone","Ain't Shit"]},
+{"id":"scarlet","t":"Scarlet","y":2023,"k":"Studio album","n":"Fourth studio album with a heavier rap focus.","v":true,"tr":["Paint the Town Red","Agora Hills","Demons","Attention","Fuck the Girls (FTG)","Balut","Often"]}],
+"songs":[
+{"t":"Mooo!","a":"amala","y":2018,"ft":[],"g":"Novelty rap","x":"A comic, meme-friendly rap track that went viral."},
+{"t":"Roll With Us","a":"amala","y":2018,"ft":[],"g":"Pop"},
+{"t":"Candy","a":"amala","y":2018,"ft":[],"g":"Pop"},
+{"t":"Streets","a":"hotpink","y":2019,"ft":[],"g":"R&B","x":"Moody R&B track that later drove a viral dance trend."},
+{"t":"Juicy","a":"hotpink","y":2019,"ft":[],"g":"Pop rap"},
+{"t":"Say So","a":"hotpink","y":2019,"ft":[],"g":"Disco-pop","p":1,"x":"Disco-funk pop hit. A remix with Nicki Minaj reached number one on the US Hot 100 in 2020."},
+{"t":"Bottom Bitch","a":"hotpink","y":2019,"ft":[],"g":"Hip hop"},
+{"t":"Rules","a":"hotpink","y":2019,"ft":[],"g":"Pop"},
+{"t":"Cyber Sex","a":"hotpink","y":2019,"ft":[],"g":"Pop"},
+{"t":"Won't Bite","a":"hotpink","y":2019,"ft":["Smino"],"g":"Hip hop"},
+{"t":"Addiction","a":"hotpink","y":2019,"ft":[],"g":"Pop"},
+{"t":"Like That","a":"hotpink","y":2019,"ft":["Gucci Mane"],"g":"Hip hop"},
+{"t":"Tia Tamera","a":"hotpink","y":2019,"ft":["Rico Nasty"],"g":"Hip hop"},
+{"t":"Boss Bitch","a":"single","y":2020,"ft":[],"g":"Hip hop","x":"Single made for the film Birds of Prey."},
+{"t":"Woman","a":"planether","y":2021,"ft":[],"g":"Pop"},
+{"t":"Naked","a":"planether","y":2021,"ft":[],"g":"Pop"},
+{"t":"Payday","a":"planether","y":2021,"ft":["Young Thug"],"g":"Hip hop"},
+{"t":"Get Into It (Yuh)","a":"planether","y":2021,"ft":[],"g":"Hip hop"},
+{"t":"Need to Know","a":"planether","y":2021,"ft":[],"g":"R&B"},
+{"t":"You Right","a":"planether","y":2021,"ft":["The Weeknd"],"g":"R&B"},
+{"t":"Options","a":"planether","y":2021,"ft":["JID"],"g":"Hip hop"},
+{"t":"Kiss Me More","a":"planether","y":2021,"ft":["SZA"],"g":"Pop","p":3,"x":"Breezy pop duet with SZA. It won a Grammy for Best Pop Duo/Group Performance."},
+{"t":"Alone","a":"planether","y":2021,"ft":[],"g":"Pop"},
+{"t":"Ain't Shit","a":"planether","y":2021,"ft":[],"g":"Pop"},
+{"t":"Vegas","a":"single","y":2022,"ft":[],"g":"Pop rap","x":"Single for the film Elvis."},
+{"t":"Paint the Town Red","a":"scarlet","y":2023,"ft":[],"g":"Pop rap","p":1,"x":"Her second number one on the US Hot 100."},
+{"t":"Agora Hills","a":"scarlet","y":2023,"ft":[],"g":"Pop"},
+{"t":"Demons","a":"scarlet","y":2023,"ft":[],"g":"Hip hop"},
+{"t":"Attention","a":"scarlet","y":2023,"ft":[],"g":"Hip hop"},
+{"t":"Fuck the Girls (FTG)","a":"scarlet","y":2023,"ft":[],"g":"Hip hop"},
+{"t":"Balut","a":"scarlet","y":2023,"ft":[],"g":"Hip hop"},
+{"t":"Often","a":"scarlet","y":2023,"ft":[],"g":"R&B"}],
+"timeline":[
+{"y":2013,"t":"SoundCloud beginnings","d":"She posts early songs online, including So High, which attracts industry attention.","v":true},
+{"y":2014,"t":"Record deal","d":"She signs with Kemosabe/RCA and releases the Purrr! EP.","v":true},
+{"y":2018,"t":"Amala and a viral moment","d":"Debut album Amala arrives, and Mooo! spreads widely online.","v":true},
+{"y":2019,"t":"Hot Pink","d":"Her second album brings Say So, Streets and Juicy.","v":true},
+{"y":2020,"t":"First number one","d":"The Say So remix with Nicki Minaj tops the US Hot 100.","v":true},
+{"y":2021,"t":"Planet Her","d":"Her third album includes Kiss Me More with SZA.","v":true},
+{"y":2022,"t":"Grammy win","d":"Kiss Me More wins Best Pop Duo/Group Performance.","v":true},
+{"y":2023,"t":"Scarlet","d":"Fourth album, led by Paint the Town Red, her second Hot 100 number one.","v":true}],
+"awards":[
+{"y":2022,"o":"Grammy Awards","c":"Best Pop Duo/Group Performance: Kiss Me More (with SZA)","r":"Win","v":true},
+{"y":2020,"o":"Billboard Hot 100","c":"Say So (remix with Nicki Minaj) reaches number one","r":"Record","v":true},
+{"y":2023,"o":"Billboard Hot 100","c":"Paint the Town Red reaches number one","r":"Record","v":true}]}
+</script>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ls={get:(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},set:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch{toast('Storage is blocked in this browser.')}}};
+const toast=m=>{const t=$('#toast');t.textContent=m;t.style.display='block';clearTimeout(toast.h);toast.h=setTimeout(()=>t.style.display='none',2600)};
+let D,extra=ls.get('dv_extra',[]),fav=ls.get('dv_fav',[]),pls=ls.get('dv_pl',[]),onlyFav=false;
+const all=()=>[...D.songs,...extra];
+const albT=id=>(D.albums.find(a=>a.id===id)||{t:'Single / other'}).t;
+const hue=s=>{let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))%360;return h};
+const cover=t=>`<div class="cover" style="background:linear-gradient(135deg,hsl(${hue(t)},85%,55%),hsl(${(hue(t)+70)%360},85%,40%))">${esc(t)}</div>`;
+const lnk=(t,w)=>w==='s'?'https://open.spotify.com/search/'+encodeURIComponent('Doja Cat '+t):w==='y'?'https://www.youtube.com/results?search_query='+encodeURIComponent('Doja Cat '+t):'https://genius.com/search?q='+encodeURIComponent('Doja Cat '+t);
+
+async function init(){
+ try{const r=await fetch('./data.json',{cache:'no-cache'});if(!r.ok)throw 0;D=await r.json()}
+ catch{D=JSON.parse($('#seed').textContent);if(location.protocol!=='file:')$('#notice').innerHTML='<p class="note">data.json could not be loaded, so built-in data is shown.</p>'}
+ const th=ls.get('dv_theme','light');document.documentElement.dataset.theme=th;
+ const b=D.bio;$('#bioBox').innerHTML=`<h3>${esc(b.name)}</h3><p><b>Born:</b> ${esc(b.born)}</p><p><b>Family:</b> ${esc(b.family)}</p><p>${esc(b.about)}</p>`;
+ $('#upd').textContent=D.updated;
+ const al='<option value="">All albums</option>'+D.albums.map(a=>`<option value="${a.id}">${esc(a.t)}</option>`).join('')+'<option value="single">Single / other</option>';
+ $('#fAlbum').innerHTML=al;$('#aA').innerHTML=al.replace('<option value="">All albums</option>','');
+ const opts=D.albums.map((a,i)=>`<option value="${a.id}">${esc(a.t)}</option>`).join('');$('#c1').innerHTML=opts;$('#c2').innerHTML=opts;$('#c2').selectedIndex=Math.min(3,D.albums.length-1);
+ renderAll();
+}
+function renderAll(){stats();songs();albums();tl();aw();co();pl();quiz();lb();cmp()}
+function stats(){$('#stats').innerHTML=[`${D.albums.length} releases`,`${all().length} songs`,`${new Set(all().flatMap(s=>s.ft)).size} collaborators`,`${D.awards.length} honors`].map(x=>`<span>${x}</span>`).join('');
+ const ys=[...new Set(all().map(s=>s.y))].sort();$('#fYear').innerHTML='<option value="">All years</option>'+ys.map(y=>`<option>${y}</option>`).join('')}
+const q=()=>$('#q').value.trim().toLowerCase();
+function songs(){
+ const f=$('#fAlbum').value,y=$('#fYear').value,t=$('#fType').value,s=$('#fSort').value,k=q();
+ let l=all().filter(x=>(!f||x.a===f)&&(!y||x.y==y)&&(!t||(t==='single'?x.a==='single':x.a!=='single'))&&(!onlyFav||fav.includes(x.t))&&(!k||[x.t,albT(x.a),x.g,x.ft.join(' '),x.x].join(' ').toLowerCase().includes(k)));
+ l.sort((a,b)=>s==='t'?a.t.localeCompare(b.t):s==='p'?(a.p||999)-(b.p||999):a.y-b.y||a.t.localeCompare(b.t));
+ $('#count').textContent=`${l.length} song${l.length===1?'':'s'}`;
+ $('#songs').innerHTML=l.length?l.map(x=>`<article class="card song">${cover(x.t)}<h3>${esc(x.t)}</h3><span class="mut">${esc(albT(x.a))}, ${x.y}</span><div>${x.p?`<span class="badge">Hot 100 peak #${x.p}</span>`:''}${x.ft.length?`<span class="badge">ft. ${esc(x.ft.join(', '))}</span>`:''}${x.mine?'<span class="badge">Added by you</span>':''}</div><div class="row"><button data-open="${esc(x.t)}">Details</button><button data-fav="${esc(x.t)}" aria-pressed="${fav.includes(x.t)}" aria-label="Favorite ${esc(x.t)}">${fav.includes(x.t)?'\u2605':'\u2606'}</button></div></article>`).join(''):'<p class="note">No songs match. Clear a filter or try another search.</p>';
+ const by={};all().forEach(x=>by[x.y]=(by[x.y]||0)+1);const mx=Math.max(...Object.values(by));
+ $('#chart').innerHTML=Object.keys(by).sort().map(k=>`<div style="height:${by[k]/mx*100}%"><span>${by[k]}</span><i>${k}</i></div>`).join('');
+ tl();aw();co();
+}
+function albums(){$('#albums').innerHTML=D.albums.map(a=>`<article class="card">${cover(a.t)}<h3 style="font-size:1.1rem">${esc(a.t)}</h3><p class="mut">${esc(a.k)}, ${a.y}</p><p>${esc(a.n)}</p>${a.tr.length?`<details><summary>Tracks in this app (${a.tr.length})</summary><ol>${a.tr.map(t=>`<li>${esc(t)}</li>`).join('')}</ol><p class="mut">Partial list. Check the full tracklist on streaming services.</p></details>`:'<p class="mut">No tracks added yet.</p>'}</article>`).join('')}
+function cmp(){const a=D.albums.find(x=>x.id===$('#c1').value),b=D.albums.find(x=>x.id===$('#c2').value);if(!a||!b)return;
+ $('#cmp').innerHTML=`<div class="grid">${[a,b].map(x=>`<div class="card"><h3 style="font-size:1.1rem">${esc(x.t)}</h3><p>${esc(x.k)}, ${x.y}</p><p>Songs in app: <b>${all().filter(s=>s.a===x.id).length}</b></p><p>Peaks at #1: <b>${all().filter(s=>s.a===x.id&&s.p===1).length}</b></p></div>`).join('')}</div>`}
+function tl(){const k=q();$('#tl').innerHTML=D.timeline.filter(e=>!k||(e.t+e.d+e.y).toLowerCase().includes(k)).map(e=>`<details><summary>${e.y}: ${esc(e.t)}</summary><p>${esc(e.d)}</p></details>`).join('')||'<p class="mut">No events match.</p>'}
+function aw(){const k=q();$('#aw').innerHTML=D.awards.filter(a=>!k||(a.o+a.c+a.r).toLowerCase().includes(k)).map(a=>`<div class="card"><span class="badge">${esc(a.r)}</span><h3 style="font-size:1.1rem">${esc(a.o)}, ${a.y}</h3><p>${esc(a.c)}</p></div>`).join('')||'<p class="mut">No awards match.</p>'}
+function co(){const m={},k=q();all().forEach(s=>s.ft.forEach(n=>(m[n]=m[n]||[]).push(s.t)));
+ $('#co').innerHTML=Object.keys(m).sort().filter(n=>!k||(n+m[n].join(' ')).toLowerCase().includes(k)).map(n=>`<div class="card"><h3 style="font-size:1.1rem">${esc(n)}</h3><p>${m[n].map(esc).join(', ')}</p></div>`).join('')||'<p class="mut">No collaborators match.</p>'}
+
+function open_(t){const s=all().find(x=>x.t===t);if(!s)return;const m=$('#m');
+ m.innerHTML=`${cover(s.t)}<h2 style="font-size:1.6rem">${esc(s.t)}</h2><p><b>${esc(albT(s.a))}</b>, ${s.y}</p><p>Genre: ${esc(s.g||'Not listed')}${s.ft.length?`<br>Featuring: ${esc(s.ft.join(', '))}`:''}${s.p?`<br>US Hot 100 peak: #${s.p}`:''}</p>${s.x?`<p>${esc(s.x)}</p>`:''}${s.n?`<p>${esc(s.n)}</p>`:''}<p class="mut">Duration, writers and certifications are not recorded yet.</p>
+ <p class="row"><a href="${lnk(s.t,'s')}" target="_blank" rel="noopener noreferrer">Listen on Spotify</a><a href="${lnk(s.t,'y')}" target="_blank" rel="noopener noreferrer">YouTube</a><a href="${lnk(s.t,'g')}" target="_blank" rel="noopener noreferrer">Lyrics (external)</a></p>
+ <p class="row"><select id="plSel" aria-label="Playlist">${pls.map((p,i)=>`<option value="${i}">${esc(p.n)}</option>`).join('')||'<option value="">No playlists yet</option>'}</select><button id="plAdd" data-t="${esc(s.t)}">Add to playlist</button><button id="x">Close</button></p>`;
+ m.showModal();$('#x').onclick=()=>m.close();
+ $('#plAdd').onclick=e=>{const i=$('#plSel').value;if(i==='')return toast('Create a playlist first.');const p=pls[i];if(p.s.includes(t))return toast('Already in this playlist.');p.s.push(t);ls.set('dv_pl',pls);pl();toast('Added to '+p.n)}}
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+ if(b.dataset.open)open_(b.dataset.open);
+ if(b.dataset.fav){const t=b.dataset.fav;fav=fav.includes(t)?fav.filter(x=>x!==t):[...fav,t];ls.set('dv_fav',fav);songs();toast(fav.includes(t)?'Added to favorites':'Removed from favorites')}
+ if(b.dataset.pl){const [a,i,j]=b.dataset.pl.split('|');const p=pls[+i];
+  if(a==='del'){if(confirm('Delete playlist "'+p.n+'"?')){pls.splice(+i,1)}}
+  if(a==='ren'){const n=prompt('New name',p.n);if(n&&n.trim())p.n=n.trim().slice(0,40)}
+  if(a==='rm')p.s.splice(+j,1);
+  if(a==='up'&&j>0)[p.s[j-1],p.s[j]]=[p.s[j],p.s[j-1]];
+  if(a==='dn'&&+j<p.s.length-1)[p.s[+j+1],p.s[j]]=[p.s[j],p.s[+j+1]];
+  ls.set('dv_pl',pls);pl()}});
+['q','fAlbum','fYear','fType','fSort'].forEach(i=>$('#'+i).addEventListener('input',songs));
+$('#c1').onchange=$('#c2').onchange=cmp;
+$('#favOnly').onclick=e=>{onlyFav=!onlyFav;e.target.setAttribute('aria-pressed',onlyFav);songs()};
+$('#sotd').onclick=()=>{const l=all();open_(l[Math.floor(Math.random()*l.length)].t)};
+$('#themeBtn').onclick=()=>{const o=['light','dark','sun'],c=document.documentElement.dataset.theme;const n=o[(o.indexOf(c)+1)%3];document.documentElement.dataset.theme=n;ls.set('dv_theme',n)};
+
+function pl(){$('#pl').innerHTML=pls.length?pls.map((p,i)=>`<div class="card" style="margin-bottom:1rem"><div class="row"><h3 style="font-size:1.1rem;margin:0">${esc(p.n)}</h3><button data-pl="ren|${i}">Rename</button><button data-pl="del|${i}">Delete</button></div>${p.s.length?'<ol>'+p.s.map((t,j)=>`<li>${esc(t)} <button data-pl="up|${i}|${j}" aria-label="Move up">\u2191</button><button data-pl="dn|${i}|${j}" aria-label="Move down">\u2193</button><button data-pl="rm|${i}|${j}" aria-label="Remove">\u00d7</button></li>`).join('')+'</ol>':'<p class="mut">Empty. Open a song and choose Add to playlist.</p>'}</div>`).join(''):'<p class="note">No playlists yet. Name one above to start.</p>'}
+$('#plForm').onsubmit=e=>{e.preventDefault();const n=$('#plName').value.trim();if(!n)return toast('Enter a playlist name.');pls.push({n:n.slice(0,40),s:[]});ls.set('dv_pl',pls);$('#plName').value='';pl();toast('Playlist created')};
+
+let Q=null;
+function mkQ(){const l=all().filter(s=>s.a!=='single'),qs=[];
+ const pick=a=>a[Math.floor(Math.random()*a.length)],shuf=a=>[...a].sort(()=>Math.random()-.5);
+ const albs=D.albums.filter(a=>a.id!=='purrr').map(a=>a.t);
+ while(qs.length<5&&l.length){const s=pick(l);
+  if(qs.length%2===0){const ans=albT(s.a);qs.push({q:`Which album is "${s.t}" on?`,a:ans,o:shuf([ans,...shuf(albs.filter(x=>x!==ans)).slice(0,3)])})}
+  else{const ans=String(s.y),ys=[...new Set(all().map(x=>String(x.y)))].filter(x=>x!==ans);qs.push({q:`In what year was "${s.t}" released?`,a:ans,o:shuf([ans,...shuf(ys).slice(0,3)])})}}
+ return qs}
+function quiz(){const b=$('#quizBox');
+ if(!Q){b.innerHTML='<p>Five questions built from the songs in this app.</p><button class="pri" id="qs">Start quiz</button>';$('#qs').onclick=()=>{Q={l:mkQ(),i:0,s:0};quiz()};return}
+ if(Q.i>=Q.l.length){b.innerHTML=`<h3>Score: ${Q.s} / ${Q.l.length}</h3><form id="lbF" class="row"><input id="lbN" placeholder="Your nickname" maxlength="20" aria-label="Nickname"><button class="pri">Save score</button></form><button id="qa">Play again</button>`;
+  $('#lbF').onsubmit=e=>{e.preventDefault();const n=$('#lbN').value.trim();if(!n)return toast('Enter a nickname.');const l=ls.get('dv_lb',[]);l.push({n:n.slice(0,20),s:Q.s,d:new Date().toISOString().slice(0,10)});l.sort((a,b)=>b.s-a.s);ls.set('dv_lb',l.slice(0,10));Q=null;quiz();lb();toast('Score saved')};
+  $('#qa').onclick=()=>{Q={l:mkQ(),i:0,s:0};quiz()};return}
+ const c=Q.l[Q.i];b.innerHTML=`<p class="mut">Question ${Q.i+1} of ${Q.l.length}</p><h3 style="font-size:1.2rem">${esc(c.q)}</h3>`+c.o.map(o=>`<button class="opt" data-o="${esc(o)}">${esc(o)}</button>`).join('');
+ $$('.opt').forEach(x=>x.onclick=()=>{const ok=x.dataset.o===c.a;if(ok)Q.s++;$$('.opt').forEach(y=>{y.disabled=true;if(y.dataset.o===c.a)y.classList.add('ok')});if(!ok)x.classList.add('no');setTimeout(()=>{Q.i++;quiz()},900)})}
+function lb(){const l=ls.get('dv_lb',[]);$('#lb').innerHTML=l.length?'<ol>'+l.map(x=>`<li>${esc(x.n)}: ${x.s}/5 <span class="mut">${esc(x.d)}</span></li>`).join('')+'</ol>':'<p class="mut">No scores yet. Finish a quiz to appear here.</p>'}
+
+$('#addForm').onsubmit=e=>{e.preventDefault();
+ const t=$('#aT').value.trim(),y=Number($('#aY').value);
+ if(!t)return toast('Enter a song title.');if(!Number.isInteger(y)||y<2000||y>2100)return toast('Enter a valid year between 2000 and 2100.');
+ if(all().some(s=>s.t.toLowerCase()===t.toLowerCase()))return toast('That song is already in the list.');
+ extra.push({t,a:$('#aA').value,y,ft:$('#aF').value.split(',').map(x=>x.trim()).filter(Boolean),g:$('#aG').value.trim(),n:$('#aN').value.trim(),mine:true});
+ ls.set('dv_extra',extra);e.target.reset();renderAll();toast('Song saved')};
+$('#exp').onclick=()=>{const o={...D,songs:all().map(({mine,...s})=>s)};const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(o,null,2)],{type:'application/json'}));a.download='data.json';a.click();toast('Exported data.json')};
+$('#imp').onclick=()=>$('#impFile').click();
+$('#impFile').onchange=async e=>{try{const j=JSON.parse(await e.target.files[0].text());if(!Array.isArray(j.songs))throw 0;extra=j.songs.filter(s=>s&&typeof s.t==='string'&&!D.songs.some(d=>d.t===s.t)).map(s=>({t:String(s.t).slice(0,80),a:String(s.a||'single'),y:Number(s.y)||0,ft:Array.isArray(s.ft)?s.ft.map(String):[],g:String(s.g||''),n:String(s.n||''),mine:true}));ls.set('dv_extra',extra);renderAll();toast('Imported '+extra.length+' songs')}catch{toast('That file is not a valid DojaVerse JSON file.')}};
+$('#clr').onclick=()=>{if(extra.length&&confirm('Remove all songs you added in this browser?')){extra=[];ls.set('dv_extra',extra);renderAll();toast('Your songs were removed')}};
+init();
+</script>
+</body>
+</html>
